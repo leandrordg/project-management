@@ -1,13 +1,9 @@
 "use client";
 
-import { useRouter } from "next/navigation";
-
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Project } from "@prisma/client";
 import { useForm } from "react-hook-form";
-import { toast } from "sonner";
 import { z } from "zod";
-import { updateProjectById } from "./actions";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -29,11 +25,16 @@ const formSchema = z.object({
   shortDescription: z.string().min(1, "Campo obrigatório"),
   repositoryUrl: z.string().min(1, "Campo obrigatório").url("URL inválida"),
   description: z.optional(z.string()),
+  images: z.array(
+    z.object({
+      src: z.string(),
+      name: z.optional(z.string()),
+      altText: z.optional(z.string()),
+    })
+  ),
 });
 
-export function RequiredStepsForm({ project }: { project: Project }) {
-  const router = useRouter();
-
+export function EditProjectForm({ project }: { project: Project }) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -44,17 +45,8 @@ export function RequiredStepsForm({ project }: { project: Project }) {
     },
   });
 
-  const projectId = project.id;
-
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    try {
-      await updateProjectById(projectId, values);
-      toast.success("Projeto atualizado com sucesso!");
-      router.refresh();
-    } catch (error) {
-      console.error(error);
-      toast.error("Erro ao atualizar o projeto!");
-    }
+    console.log(values);
   }
 
   const { isSubmitting, isValid, isDirty } = form.formState;
@@ -149,7 +141,7 @@ export function RequiredStepsForm({ project }: { project: Project }) {
         />
 
         <Button type="submit" disabled={!isValid || isSubmitting || !isDirty}>
-          {isSubmitting ? <Loader2Icon className="animate-spin" /> : "Avançar"}
+          {isSubmitting ? <Loader2Icon className="animate-spin" /> : "Salvar"}
         </Button>
       </form>
     </Form>

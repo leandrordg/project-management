@@ -4,7 +4,7 @@ import { getProjectById } from "@/hooks/projects";
 import { formatDate } from "@/lib/utils";
 
 import { EyeOffIcon, HammerIcon } from "lucide-react";
-import { FinishProjectRequiredSteps } from "./form";
+import { RequiredStepsForm } from "./form";
 import { ProjectDetails } from "./project-details";
 
 export default async function IndividualProjectPage({
@@ -19,7 +19,7 @@ export default async function IndividualProjectPage({
   if (!project) return notFound();
 
   return (
-    <main className="max-w-4xl mx-auto md:p-4">
+    <main className="max-w-4xl mx-auto md:p-4 space-y-4">
       <article className="card">
         <p className="short-description">
           {formatDate(project.createdAt, {
@@ -51,9 +51,7 @@ export default async function IndividualProjectPage({
           <p className="description">{project.shortDescription}</p>
         )}
 
-        {!project.finishedSteps && (
-          <FinishProjectRequiredSteps project={project} />
-        )}
+        {!project.finishedSteps && <RequiredStepsForm project={project} />}
 
         {project.finishedSteps && (
           <ProjectDetails project={project} user={project.user} />

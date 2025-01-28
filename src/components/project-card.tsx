@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 
+import { formatAgoDate } from "@/lib/utils";
 import { Project, User } from "@prisma/client";
 
 import { EyeOffIcon, HammerIcon } from "lucide-react";
@@ -47,9 +48,13 @@ export function ProjectCard({
         <p className="description line-clamp-2">{project.shortDescription}</p>
       )}
 
-      <p className="text-sm text-muted-foreground">
-        {user.username ?? user.emailAddress}
-      </p>
+      <div className="flex items-center gap-2 text-muted-foreground">
+        <p className="text-xs">{user.username ?? user.emailAddress}</p>
+
+        <span>&middot;</span>
+
+        <p className="text-xs">{formatAgoDate(project.createdAt)}</p>
+      </div>
     </article>
   );
 }

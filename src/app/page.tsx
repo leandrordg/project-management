@@ -19,7 +19,7 @@ export default async function HomePage() {
 
   return (
     <main className="max-w-4xl mx-auto md:p-4 space-y-4">
-      <div className="flex items-center gap-4">
+      <div className="card">
         <SignedIn>
           <Button variant="secondary" asChild>
             <SignOutButton>Sair</SignOutButton>

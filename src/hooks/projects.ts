@@ -9,7 +9,7 @@ export const getPublicProjects = async () => {
   });
 };
 
-export const getProjectsByUser = async (userId: string) => {
+export const getProjectsByUserId = async (userId: string) => {
   const { userId: currentUserId } = await auth();
 
   const projects = await prisma.project.findMany({
