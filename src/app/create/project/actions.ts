@@ -8,10 +8,5 @@ export const createProject = async ({ name }: { name: string }) => {
 
   if (!userId) throw new Error("Usuário não autenticado");
 
-  return await prisma.project.create({
-    data: {
-      name,
-      userId,
-    },
-  });
+  return await prisma.project.create({ data: { name, userId } });
 };

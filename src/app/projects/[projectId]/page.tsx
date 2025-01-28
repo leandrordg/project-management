@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import { getProjectById } from "@/hooks/projects";
 import { formatDate } from "@/lib/utils";
 
-import { EyeOffIcon } from "lucide-react";
+import { EyeOffIcon, HammerIcon } from "lucide-react";
 import { FinishProjectRequiredSteps } from "./form";
 import { ProjectDetails } from "./project-details";
 
@@ -28,10 +28,20 @@ export default async function IndividualProjectPage({
           })}
         </p>
 
-        {!project.isPublic && (
-          <div className="flex items-center gap-1 text-muted-foreground hover:bg-muted px-1.5 py-0.5 rounded-md border select-none w-fit">
-            <EyeOffIcon className="size-3" />
-            <span className="text-xs">Privado</span>
+        {(!project.finishedSteps || !project.isPublic) && (
+          <div className="flex items-center gap-2">
+            {!project.finishedSteps && (
+              <div className="flex items-center gap-1 text-muted-foreground hover:bg-muted px-1.5 py-0.5 rounded-md border select-none w-fit">
+                <HammerIcon className="size-3" />
+                <span className="text-xs">Em andamento</span>
+              </div>
+            )}
+            {!project.isPublic && (
+              <div className="flex items-center gap-1 text-muted-foreground hover:bg-muted px-1.5 py-0.5 rounded-md border select-none w-fit">
+                <EyeOffIcon className="size-3" />
+                <span className="text-xs">Privado</span>
+              </div>
+            )}
           </div>
         )}
 

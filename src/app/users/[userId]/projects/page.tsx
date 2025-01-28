@@ -1,6 +1,6 @@
-import { ProjectCard } from "@/components/project-card";
-import { getPublicProjectsByUserId } from "@/hooks/projects";
+import { getProjectsByUser } from "@/hooks/projects";
 
+import { ProjectCard } from "@/components/project-card";
 import { InfoIcon } from "lucide-react";
 
 export default async function UserProjectsPage({
@@ -10,7 +10,7 @@ export default async function UserProjectsPage({
 }) {
   const { userId } = await params;
 
-  const projects = await getPublicProjectsByUserId(userId);
+  const projects = await getProjectsByUser(userId);
 
   return (
     <main className="max-w-4xl mx-auto md:p-4 space-y-4">

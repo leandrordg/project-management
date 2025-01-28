@@ -14,11 +14,9 @@ export const deleteProjectById = async (projectId: string) => {
 
   if (!project) throw new Error("Projeto não encontrado");
 
-  return prisma.project.delete({
-    where: {
-      id: project.id,
-    },
-  });
+  if (project.userId !== userId) throw new Error("Usuário não autorizado");
+
+  return await prisma.project.delete({ where: { id: project.id } });
 };
 
 export const updateProjectById = async (
@@ -42,9 +40,6 @@ export const updateProjectById = async (
 
   return prisma.project.update({
     where: { id: project.id },
-    data: {
-      finishedSteps: new Date(),
-      ...data,
-    },
+    data: { ...data, finishedSteps: true },
   });
 };
